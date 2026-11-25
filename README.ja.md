@@ -25,7 +25,7 @@ WezTerm のキーバインドを**別の小窓**に表示します。
 | 環境 | 状況 |
 |---|---|
 | Linux、GNOME（Wayland）上で WezTerm を XWayland で実行（`enable_wayland = false`） | 確認済み |
-| Linux、GNOME で WezTerm をネイティブ Wayland で実行 | プラグイン版は未確認 |
+| Linux、GNOME で WezTerm をネイティブ Wayland で実行 | [`examples/wezterm.lua`](examples/wezterm.lua) で確認済み（開く、閉じる、窓が重複しない） |
 | その他の Linux デスクトップ | 未確認 |
 | macOS | 未確認 |
 | Windows | 非対応（ビューアが `termios` を使うため） |

@@ -25,7 +25,7 @@ without splitting or covering the pane you are working in.
 | Platform | Status |
 |---|---|
 | Linux, GNOME on Wayland, WezTerm on XWayland (`enable_wayland = false`) | Tested |
-| Linux, GNOME, WezTerm on native Wayland | Plugin version not verified |
+| Linux, GNOME, WezTerm on native Wayland | Tested with [`examples/wezterm.lua`](examples/wezterm.lua): open, close, no duplicate window |
 | Other Linux desktops | Untested |
 | macOS | Untested |
 | Windows | Not supported (the viewer uses `termios`) |
