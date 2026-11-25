@@ -19,7 +19,8 @@ without splitting or covering the pane you are working in.
 
 - WezTerm (developed on nightly `20261114-121057-e1eae81a`; other versions are untested)
 - Python 3 (`python3` on `PATH`, or set the `python` option). No extra packages are needed.
-  Tested with 3.12.3. If it cannot be run, the plugin logs an error and shows a notification.
+  Tested with 3.12.3. If it cannot be run, the plugin shows the error over the current pane (press `Esc` to close it),
+  logs it, and also sends a desktop notification, which may not appear.
 - Platforms:
 
 | Platform | Status |

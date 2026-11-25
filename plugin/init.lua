@@ -17,7 +17,8 @@ local LOCALES = {
 		undocumented = "(no description)",
 		leader = "Leader = %s (next key within %gs)",
 		footer = "q / Esc: close   j / k: scroll",
-		python_missing = "Cannot run %s. Install Python 3, or set the \"python\" option.",
+		python_missing = "Cannot run %s.",
+		python_hint = "Install Python 3, or set the \"python\" option.",
 		table_groups = { copy_mode = "Copy mode", search_mode = "Search mode" },
 	},
 	ja = {
@@ -27,7 +28,8 @@ local LOCALES = {
 		undocumented = "（説明なし）",
 		leader = "Leader = %s（%g秒以内に次のキー）",
 		footer = "q / Esc: 閉じる   j / k: スクロール",
-		python_missing = "%s を実行できません。Python 3 を導入するか、python オプションを指定してください。",
+		python_missing = "%s を実行できません。",
+		python_hint = "Python 3 を導入するか、python オプションを指定してください。",
 		table_groups = { copy_mode = "コピーモード", search_mode = "検索モード" },
 	},
 }
@@ -314,7 +316,19 @@ local function find_window(window_id)
 	end
 end
 
-local function show(window, binds, options)
+-- Show an error over the current pane: a desktop notification may never appear.
+-- The choices are only lines of text, so selecting one does nothing.
+local dismiss = wezterm.action_callback(function() end)
+
+local function show_error(window, pane, title, lines)
+	local choices = {}
+	for i, line in ipairs(lines) do
+		choices[i] = { label = line }
+	end
+	window:perform_action(wezterm.action.InputSelector({ title = title, choices = choices, action = dismiss }), pane)
+end
+
+local function show(window, pane, binds, options)
 	-- If the window is already open, focus it instead of opening another
 	local existing = wezterm.GLOBAL.cheatsheet_window_id
 	if existing then
@@ -331,8 +345,10 @@ local function show(window, binds, options)
 	local ok, success = pcall(wezterm.run_child_process, { options.python, "-c", "import termios, tty" })
 	if not (ok and success) then
 		local message = string.format(options.text.python_missing, options.python)
-		wezterm.log_error("cheatsheet: " .. message)
-		window:toast_notification(options.title, message, nil, 5000)
+		local hint = options.text.python_hint
+		wezterm.log_error("cheatsheet: " .. message .. " " .. hint)
+		window:toast_notification(options.title, message .. " " .. hint, nil, 5000)
+		show_error(window, pane, options.title, { message, hint })
 		return
 	end
 
@@ -359,8 +375,8 @@ function M.apply_to_config(config, opts)
 		binds.keys[i] = entry
 	end
 
-	local action = wezterm.action_callback(function(window, _)
-		show(window, binds, options)
+	local action = wezterm.action_callback(function(window, pane)
+		show(window, pane, binds, options)
 	end)
 
 	if options.key then
