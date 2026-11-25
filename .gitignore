@@ -1,0 +1,6 @@
+# personal config backups
+backup/
+# old pre-plugin copies, not part of the plugin
+/cheatsheet.lua
+/cheatsheet_view.py
+__pycache__/
