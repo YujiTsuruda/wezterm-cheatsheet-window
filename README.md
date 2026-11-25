@@ -5,7 +5,9 @@
 Show your WezTerm key bindings in a **separate small window**, so you can read them
 without splitting or covering the pane you are working in.
 
-<!-- TODO: add screenshot -->
+![The cheatsheet window shown on top of an editor](assets/screenshot.png)
+
+<sub>Shown with demo key bindings. The blue border was added for this screenshot; the plugin does not draw it.</sub>
 
 - Built from your own `config.keys` and `config.key_tables`: add `desc` and the list stays in sync
 - Includes your custom key tables, shown with the key that enters them (`Leader + e → LeftArrow`)
